@@ -1,3 +1,5 @@
+from django.conf.urls import url
+from ratifyApp import views
 """ratify URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -18,4 +20,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^questions', views.questions, name="questions"),
+    url(r'^vote/(?P<question_id>[0-9]+)', views.vote, name="vote")
 ]
