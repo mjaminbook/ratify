@@ -5,9 +5,8 @@ span.s1 {font-kerning: none}
 span.s2 {font-kerning: none; color: #0000ff; -webkit-text-stroke: 0px #0000ff}*/
 div {
   width: 100px;
-  column-width: 45px;
+  column-width: 80px;
   column-gap: 0;
-  
 }
 p.p1
 {
