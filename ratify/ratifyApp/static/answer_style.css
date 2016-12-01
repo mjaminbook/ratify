@@ -1,0 +1,23 @@
+/*
+p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 14.0px; font: 16.0px Times; color: #000000; -webkit-text-stroke: #000000}
+p.p2 {margin: 0.0px 20.0px 12.0px 0.0px; line-height: 14.0px; font: 16.0px Times; color: #ffa500; -webkit-text-stroke: #ffa500}
+span.s1 {font-kerning: none}
+span.s2 {font-kerning: none; color: #0000ff; -webkit-text-stroke: 0px #0000ff}*/
+div {
+  width: 100px;
+  column-width: 80px;
+  column-gap: 0;
+}
+p.p1
+{
+  color: #2c81e1;
+  font-size: 25px;
+  text-align: center;
+
+}
+p.p2
+{
+  color: #ffa500;
+  font-size: 18px;
+  text-align: center;
+}

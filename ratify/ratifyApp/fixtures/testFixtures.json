@@ -1,0 +1,39 @@
+[
+	{
+		"model" : "ratifyApp.Question",
+		"pk" : 1,
+		"fields" : {
+			"question_text" : "What is the yummiest food?"
+		}
+	},
+
+	{
+		"model" : "ratifyApp.Answer",
+		"pk" : 1,
+		"fields" : {
+			"question" : 1,
+			"answer_text" : "Pizza",
+			"num_votes" : 1
+		}
+	},
+
+	{
+		"model" : "ratifyApp.Answer",
+		"pk" : 2,
+		"fields" : {
+			"question" : 1,
+			"answer_text" : "Ice Cream",
+			"num_votes" : 1
+		}
+	},
+
+	{
+		"model" : "ratifyApp.Answer",
+		"pk" : 3,
+		"fields" : {
+			"question" : 1,
+			"answer_text" : "Chocolate",
+			"num_votes" : 1
+		}
+	}
+]
