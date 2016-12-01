@@ -7,12 +7,12 @@
 <body>
 <br></br>
 <br></br>
-<p class="p1">Question: What is the yummiest food?</p>
+<p class="p1">Question: {{question_text}}</p>
 <br></br>
 <div align="center">
-<p class="p2">Pizza</p>
-<p class="p2">Ice cream</p>
-<p class="p2">Chocolate</p>
+{% for answer in answers %}
+	<p class="p2" id="{{answer.pk}}">{{answer.answer_text}}</p>
+{% endfor %}
 </div>
 </body>
 </html>

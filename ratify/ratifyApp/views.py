@@ -10,7 +10,8 @@ def questions(request):
 def answer(request, question_id):
 	question = Question.objects.get(pk=question_id)
 	answers = Answer.objects.filter(question_id=question_id)
-	return render(request,"answer_page.html")
+	context = {"question_text" : question.question_text, "answers" : answers}
+	return render(request,"answer_page.html", context)
 
 #The next three functions all expect POST requests
 def vote(request):
