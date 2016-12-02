@@ -4,8 +4,17 @@ from .models import Answer, Question
 
 # Create your views here.
 def questions(request):
+	questionList = []
 	questions = Question.objects.all()
-	return HttpResponse("Question Page")
+	for question in questions:
+		total_votes = 0
+		answers = Answer.objects.filter(question=question)
+		for answer in answers:
+			total_votes += answer.num_votes
+		question_context = {"text" : question.question_text, "num_votes" : total_votes, "id" : question.pk}
+		questionList.append(question_context)
+	context = {"questions" : questionList}
+	return render(request, "question_page.html", context)
 
 def answer(request, question_id):
 	question = Question.objects.get(pk=question_id)
