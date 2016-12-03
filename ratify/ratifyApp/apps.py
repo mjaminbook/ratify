@@ -4,4 +4,4 @@ from django.apps import AppConfig
 
 
 class RatifyappConfig(AppConfig):
-    name = 'ratifyApp'
+	name = 'ratifyApp'
