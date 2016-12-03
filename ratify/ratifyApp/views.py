@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from .models import Answer, Question
+import json
 
 # Create your views here.
 def questions(request):
@@ -25,7 +26,7 @@ def answer(request, question_id):
 #The next three functions all expect POST requests
 def vote(request):
 	answerId = request.POST.get("answer_id")
-	answer = Answer.objects.get(pk=answer_id)
+	answer = Answer.objects.get(pk=answerId)
 	answer.num_votes += 1
 	answer.save(update_fields=["num_votes"])
 	response = {"status" : 200, "answer_id" : answerId, "total_votes" : answer.num_votes}
