@@ -3,16 +3,78 @@
 <head>
   {% load static %}
   <link rel="stylesheet" href="{% static 'answer_style.css' %}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
+
+<button onClick="go_to_questions()">Back to Questions</button>
 <br></br>
 <br></br>
 <p class="p1">Question: {{question_text}}</p>
 <br></br>
-<div align="center">
+<div>
 {% for answer in answers %}
-	<p class="p2" id="{{answer.pk}}">{{answer.answer_text}}</p>
+	<p class="p2">{{answer.answer_text}}
+    <button id="{{answer.pk}}" onClick="vote(this.id)">Vote for this!</button>
+  <p class="p3" id="{{answer.num_votes}}">Vote: {{answer.num_votes}}</p>
 {% endfor %}
 </div>
+<h2>Add Answer</h2>
+<input id="new_answer_input" type="text" name="answer_text">
+<button onClick="add_answer()">Submit</button>
 </body>
 </html>
+
+<script>
+
+$.ajaxSetup({ 
+     beforeSend: function(xhr, settings) {
+         function getCookie(name) {
+             var cookieValue = null;
+             if (document.cookie && document.cookie != '') {
+                 var cookies = document.cookie.split(';');
+                 for (var i = 0; i < cookies.length; i++) {
+                     var cookie = jQuery.trim(cookies[i]);
+                     // Does this cookie string begin with the name we want?
+                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                         break;
+                     }
+                 }
+             }
+             return cookieValue;
+         }
+         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+             // Only send the token to relative URLs i.e. locally.
+             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+         }
+     } 
+});
+
+function vote(a_id) {
+$.ajax({
+  type: "POST",
+  url: "/vote",
+  data: {"answer_id":a_id},
+  success: function() {location.reload();},
+  dataType: "text"
+});
+}
+function add_answer() {
+var a_text = $("#new_answer_input").val();
+var url_parts = window.location.pathname.split('/');
+var q_id = url_parts[url_parts.length - 1];
+
+$.ajax({
+  type: "POST",
+  url: "/add_answer",
+  data: {"answer_text":a_text, "question_id":q_id},
+  success: function() {location.reload();},
+  dataType: "text"
+});
+}
+
+function go_to_questions() {
+    window.location.pathname="/questions";
+}
+</script>

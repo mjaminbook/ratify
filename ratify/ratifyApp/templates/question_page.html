@@ -7,32 +7,61 @@
 </head>
 <body>
     <!--TODO: Move this style to styles.css-->
-<div id="q_list" style="overflow:scroll">
+  <h1>Questions</h1>
+<div id="q_list" style="overflow:scroll; max-height:450px">
 	{% for question in questions %}
-		<div class='question' id={{question.id}} style='border-style:solid; margin-bottom:6px'>
+		<div onClick="nav_to_answer(this.id)" class='question' id={{question.id}}  style='border-style:solid; margin-bottom:6px'>
 			<p>{{question.text}}</p>
-			<p>{{question.num_votes}}</p>
+			<p>Total votes: {{question.num_votes}}</p>
 		</div>
 	{% endfor %}
 </div>
+
+<h2>Add Question</h2>
+<input id="new_question_input" type="text" name="question_text">
+<button onClick="add_question()">Submit</button>
 </body>
 </html>
 
 <script>
+$.ajaxSetup({ 
+     beforeSend: function(xhr, settings) {
+         function getCookie(name) {
+             var cookieValue = null;
+             if (document.cookie && document.cookie != '') {
+                 var cookies = document.cookie.split(';');
+                 for (var i = 0; i < cookies.length; i++) {
+                     var cookie = jQuery.trim(cookies[i]);
+                     // Does this cookie string begin with the name we want?
+                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                         break;
+                     }
+                 }
+             }
+             return cookieValue;
+         }
+         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+             // Only send the token to relative URLs i.e. locally.
+             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+         }
+     } 
+});
+function nav_to_answer(question_id) {
+    //set url to answer_page/question_id
+    var path = "/answer_page/" + question_id;
+    window.location.pathname=path;
+}
 
-
-// var questions = [];
-// questions.push({question:"Test question",num_votes:"4"});
-// questions.push({question:"Second test question",num_votes:"3"});
-
-// for (var i=0; i < questions.length; i++) {
-//     //add the row to the list
-//             //TODO: move styles to question class in styles.css
-//     $("#q_list").append($("<div class='question' style='border-style:solid; margin-bottom:6px'>")
-//     //add the question to the row
-//     .append($("<p>").append(questions[i].question))
-//     //add the number of votes to the row
-//     .append($("<p>").append(questions[i].num_votes)));
-// }
+function add_question() {
+var q_text = $("#new_question_input").val();
+$.ajax({
+  type: "POST",
+  url: "/add_question",
+  data: {"question_text":q_text},
+  success: function() {location.reload();},
+  dataType: "text"
+});
+}
 
 </script>
