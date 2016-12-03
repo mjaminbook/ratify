@@ -21,5 +21,8 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^questions', views.questions, name="questions"),
-    url(r'^vote/(?P<question_id>[0-9]+)', views.vote, name="vote")
+    url(r'^answer_page/(?P<question_id>[0-9]+)', views.answer, name="answer"),
+    url(r'^vote', views.vote, name="vote"),
+    url(r'^add_answer', views.add_answer, name="add_answer"),
+    url(r'^add_question', views.add_question, name="add_question"),
 ]

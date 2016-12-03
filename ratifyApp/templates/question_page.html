@@ -1,0 +1,67 @@
+<!DOCTYPE>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+  <title>Questions</title>
+</head>
+<body>
+    <!--TODO: Move this style to styles.css-->
+  <h1>Questions</h1>
+<div id="q_list" style="overflow:scroll">
+	{% for question in questions %}
+		<div onClick="nav_to_answer(this.id)" class='question' id={{question.id}}  style='border-style:solid; margin-bottom:6px'>
+			<p>{{question.text}}</p>
+			<p>{{question.num_votes}}</p>
+		</div>
+	{% endfor %}
+</div>
+
+<h2>Add Question</h2>
+<input id="new_question_input" type="text" name="question_text">
+<button onClick="add_question()">Submit</button>
+</body>
+</html>
+
+<script>
+$.ajaxSetup({ 
+     beforeSend: function(xhr, settings) {
+         function getCookie(name) {
+             var cookieValue = null;
+             if (document.cookie && document.cookie != '') {
+                 var cookies = document.cookie.split(';');
+                 for (var i = 0; i < cookies.length; i++) {
+                     var cookie = jQuery.trim(cookies[i]);
+                     // Does this cookie string begin with the name we want?
+                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                         break;
+                     }
+                 }
+             }
+             return cookieValue;
+         }
+         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+             // Only send the token to relative URLs i.e. locally.
+             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+         }
+     } 
+});
+function nav_to_answer(question_id) {
+    //set url to answer_page/question_id
+    var path = "/answer_page/" + question_id;
+    window.location.pathname=path;
+}
+
+function add_question() {
+var q_text = $("#new_question_input").val();
+$.ajax({
+  type: "POST",
+  url: "/add_question",
+  data: {"question_text":q_text},
+  success: function() {location.reload();},
+  dataType: "text"
+});
+}
+
+</script>
