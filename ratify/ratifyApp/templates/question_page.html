@@ -8,11 +8,11 @@
 <body>
     <!--TODO: Move this style to styles.css-->
   <h1>Questions</h1>
-<div id="q_list" style="overflow:scroll">
+<div id="q_list" style="overflow:scroll; max-height:450px">
 	{% for question in questions %}
 		<div onClick="nav_to_answer(this.id)" class='question' id={{question.id}}  style='border-style:solid; margin-bottom:6px'>
 			<p>{{question.text}}</p>
-			<p>{{question.num_votes}}</p>
+			<p>Total votes: {{question.num_votes}}</p>
 		</div>
 	{% endfor %}
 </div>
